@@ -34,10 +34,10 @@ def tests():
     def test_fit(fname):
         dictionary = Dictionary(min_count=5, replace_lower_freq_word=False, replace_word='', bos_word='', eos_word='')
         dictionary.fit(fname)
-        assert len(dictionary.dictionary) == 26-4
-        assert dictionary.dictionary.id2word[0] == 'z'
-        assert dictionary.dictionary.id2word[-1] == 'e'
-        assert dictionary.dictionary.id2freq[0] == 26
+        assert len(dictionary.vocab) == 26-4
+        assert dictionary.vocab.id2word[0] == 'z'
+        assert dictionary.vocab.id2word[-1] == 'e'
+        assert dictionary.vocab.id2freq[0] == 26
         assert dictionary.num_words == np.sum(np.arange(5, 27))
 
     def test_fit_with_replace_and_add_special(fname):
@@ -45,17 +45,17 @@ def tests():
                                 eos_word='<eos>')
         dictionary.fit(fname)
 
-        assert dictionary.dictionary.id2word[-1] == '<unk>'
-        assert dictionary.dictionary.id2freq[0] == 26
+        assert dictionary.vocab.id2word[-1] == '<unk>'
+        assert dictionary.vocab.id2freq[0] == 26
 
         if 'text8' in fname:
-            assert dictionary.dictionary.id2word[0] == 'z'
-            assert len(dictionary.dictionary) == 26 - 4 + 1
+            assert dictionary.vocab.id2word[0] == 'z'
+            assert len(dictionary.vocab) == 26 - 4 + 1
             assert dictionary.num_vocab == 26 - 4 + 1
             assert dictionary.num_words == np.sum(np.arange(27)) + 2  # <bos> and <eos>
         else:
-            assert dictionary.dictionary.id2word[2] == 'z'
-            assert len(dictionary.dictionary) == 26 - 4 + 3
+            assert dictionary.vocab.id2word[2] == 'z'
+            assert len(dictionary.vocab) == 26 - 4 + 3
             assert dictionary.num_vocab == 26 - 4 + 3
             assert dictionary.num_words == np.sum(np.arange(1, 27) + 2)
 

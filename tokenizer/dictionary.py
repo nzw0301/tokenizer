@@ -5,7 +5,7 @@ from .vocab import Vocab
 class Dictionary(object):
     def __init__(self, replace_lower_freq_word=False, min_count=5,
                  replace_word='<unk>', bos_word='<bos>', eos_word='<eos>'):
-        self.dictionary = Vocab(replace_lower_freq_word, replace_word)
+        self.vocab = Vocab(replace_lower_freq_word, replace_word)
         self.num_words = 0
         self.num_vocab = 0
         self.discard_table = None
@@ -22,10 +22,10 @@ class Dictionary(object):
     def _process_doc(self, doc: str):
         returned_words = []
         for word in doc.split():
-            if word in self.dictionary.word2id:
-                returned_words.append(self.dictionary.word2id.get(word))
+            if word in self.vocab.word2id:
+                returned_words.append(self.vocab.word2id.get(word))
             elif self.replace_lower_freq_word:
-                returned_words.append(self.dictionary.word2id.get(self.replace_word))
+                returned_words.append(self.vocab.word2id.get(self.replace_word))
         return returned_words
 
     def fit(self, docs):
@@ -41,15 +41,15 @@ class Dictionary(object):
         for doc in docs:
             doc = self._add_special_word(doc)
             for word in doc.split():
-                self.dictionary.add_word(word=word)
+                self.vocab.add_word(word=word)
         if is_str:
             docs.close()
 
         if self.min_count > 1:
-            self.dictionary.remove_low_freq_words_from_dict(min_count=self.min_count)
+            self.vocab.remove_low_freq_words_from_dict(min_count=self.min_count)
 
-        self.num_vocab = len(self.dictionary)
-        self.num_words = np.sum(self.dictionary.id2freq)
+        self.num_vocab = len(self.vocab)
+        self.num_words = np.sum(self.vocab.id2freq)
         self.is_tokenized = True
 
     def fit_transform(self, docs):
