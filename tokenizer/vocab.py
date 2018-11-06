@@ -20,6 +20,9 @@ class Vocab(object):
 
     def remove_low_freq_words_from_dict(self, min_count=5):
         self.id2word = sorted(self.word2freq, key=self.word2freq.get, reverse=True)
+        if min_count == 1:
+            self.id2freq = np.array([self.word2freq[word] for word in self.id2word])
+            return
 
         for new_word_id, word in enumerate(self.id2word):
             freq = self.word2freq[word]

@@ -40,6 +40,16 @@ def tests():
         assert dictionary.vocab.id2freq[0] == 26
         assert dictionary.num_words == np.sum(np.arange(5, 27))
 
+
+    def test_fit_min_count1(fname):
+        dictionary = Dictionary(min_count=1, replace_lower_freq_word=False, replace_word='', bos_word='', eos_word='')
+        dictionary.fit(fname)
+        assert len(dictionary.vocab) == 26
+        assert dictionary.vocab.id2word[0] == 'z'
+        assert dictionary.vocab.id2word[-1] == 'a'
+        assert dictionary.vocab.id2freq[0] == 26
+        assert dictionary.num_words == np.sum(np.arange(1, 27))
+
     def test_fit_with_replace_and_add_special(fname):
         dictionary = Dictionary(min_count=5, replace_lower_freq_word=True, replace_word='<unk>', bos_word='<bos>',
                                 eos_word='<eos>')
@@ -75,6 +85,7 @@ def tests():
         with open(fname) as f:
             docs = f.readlines()
             test_fit(docs)
+            test_fit_min_count1(docs)
             test_fit_with_replace_and_add_special(docs)
             test_transform(docs)
 

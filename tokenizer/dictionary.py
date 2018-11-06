@@ -3,8 +3,14 @@ from .vocab import Vocab
 
 
 class Dictionary(object):
-    def __init__(self, replace_lower_freq_word=False, min_count=5,
-                 replace_word='<unk>', bos_word='<bos>', eos_word='<eos>'):
+    def __init__(
+        self,
+        replace_lower_freq_word=False,
+        min_count=5,
+        replace_word='<unk>',
+        bos_word='<bos>',
+        eos_word='<eos>'
+    ):
         self.vocab = Vocab(replace_lower_freq_word, replace_word)
         self.num_words = 0
         self.num_vocab = 0
@@ -45,8 +51,7 @@ class Dictionary(object):
         if is_str:
             docs.close()
 
-        if self.min_count > 1:
-            self.vocab.remove_low_freq_words_from_dict(min_count=self.min_count)
+        self.vocab.remove_low_freq_words_from_dict(min_count=self.min_count)
 
         self.num_vocab = len(self.vocab)
         self.num_words = np.sum(self.vocab.id2freq)
