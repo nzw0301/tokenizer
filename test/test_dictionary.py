@@ -46,6 +46,7 @@ def tests():
         dictionary.fit(fname)
         assert len(dictionary.vocab) == 26
         assert dictionary.vocab.id2word[0] == 'z'
+        assert dictionary.vocab.word2id['z'] == 0
         assert dictionary.vocab.id2word[-1] == 'a'
         assert dictionary.vocab.id2freq[0] == 26
         assert dictionary.num_words == np.sum(np.arange(1, 27))
@@ -73,7 +74,7 @@ def tests():
         dictionary = Dictionary(min_count=1, replace_lower_freq_word=False, bos_word='', eos_word='')
         dictionary.fit(fname)
         docs = dictionary.transform(fname)
-        assert docs[0] == np.array([0])
+        assert docs[0] == np.array([25])  # z
 
     for fname in [text8_like_file_name, doc_file_name]:
         test_fit(fname)
