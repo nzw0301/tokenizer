@@ -10,7 +10,7 @@ DOC_FILE_NAME = 'doc.txt'
 def create_test_corpus_files():
     with open(TEXT8_LIKE_FILE_NAME, 'w') as f:
         """
-        file content: " a b b c c c ... z" 
+        file content: " a b b c c c ... z"
         """
         words = [" "]
         for count, char in enumerate(string.ascii_lowercase, start=1):
@@ -21,17 +21,17 @@ def create_test_corpus_files():
     with open(DOC_FILE_NAME, 'w') as f:
         """
         file content:
-         
+
         a
-        
+
         b b
-        
+
         c c c
-        
+
         ...
-        
+
         z ...... z
-        
+
         """
         for count, char in enumerate(string.ascii_lowercase, start=1):
             words = []

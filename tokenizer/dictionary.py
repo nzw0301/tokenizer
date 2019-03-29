@@ -102,7 +102,7 @@ class Dictionary(object):
         """
         :param fname: str. Target file name.
         :param in_memory: If True, read a file on memory, then fit on it.
-        else read each word from file to reduce the memory usage.
+        else read/fit each word from file to reduce the memory usage.
         :return: None
         """
         if self.is_tokenized:
