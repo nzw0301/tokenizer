@@ -11,15 +11,15 @@ class Dictionary(object):
         self,
         replace_lower_freq_word=False,
         min_count=5,
-        replace_word='<UNK>',
+        replace_word="<UNK>",
         max_sentence_length=1000
     ):
         """
         :param replace_lower_freq_word: boolean. Whether replace lower frequency and OOV word with `replace_word`.
         If False, these words removed from sequences.
-        :param min_count: threshold of word frequency.
+        :param min_count: Threshold of word frequency.
         :param replace_word: str. Replacing word for OOV word.
-        :param max_sentence_length: maximum word sequence length for generator version.
+        :param max_sentence_length: Maximum word sequence length for generator version.
         """
         self.vocab = Vocab(replace_lower_freq_word, replace_word)
         self.num_words = 0
@@ -58,8 +58,8 @@ class Dictionary(object):
 
     def _read_word_generator(self, file):
         """
-        :param file: file instance.
-        :return: one word (str)
+        :param file: File instance.
+        :return: One word (str)
         """
         word = ""
         while True:
@@ -80,7 +80,7 @@ class Dictionary(object):
 
     def _build_vocab_from_file(self, fname: str):
         """
-        :param fname: str. target file name.
+        :param fname: str. Target file name.
         :return: None
         """
         with open(fname) as f:
@@ -118,7 +118,7 @@ class Dictionary(object):
 
     def fit_from_list(self, docs):
         """
-        Fit on list of str
+        Fit on list of str.
         :param docs: List of str
         :return: None
         """
@@ -133,11 +133,11 @@ class Dictionary(object):
 
     def fit(self, docs, in_memory=False):
         """
-        :param docs: list of str or str (file path and name)
+        :param docs: List of str or str (file path and name)
         :param in_memory: Boolean flag. If a file is large, you should pass `True`.
             This argument is valid when type of `docs` is str.
-            True: read each character like `word2vec.c`,
-            False: fit a docs in-memory.
+            True: Read each character like `word2vec.c`,
+            False: Fit a docs in-memory.
         :return: None
         """
         if self.is_tokenized:
@@ -151,8 +151,8 @@ class Dictionary(object):
     def fit_transform(self, docs):
         """
         In-memory `fit` and `transform`
-        :param docs: list of str or str (file path and name).
-        :return: list of list of int.
+        :param docs: List of str or str (file path and name).
+        :return: List of list of int.
         """
         self.fit(docs, in_memory=True)
         return self.transform(docs)
@@ -161,8 +161,8 @@ class Dictionary(object):
     def generator_transform_from_fname(self, fname: str):
         """
         Generator to read words from a large text file.
-        :param fname: file names
-        :return: generator word id's sequences
+        :param fname: File name.
+        :return: Generator word id's sequences.
         """
         if not self.is_tokenized:
             raise Exception("This dictionary instance has not tokenized yet.")
@@ -182,7 +182,8 @@ class Dictionary(object):
                     word_id = self.vocab.word2id[self.replace_word]
                     word_ids.append(word_id)
 
-                elif word != self.LINE_BREAK_WORD:  # skip unknown word without replacement by a special word.
+                # skip unknown word without replacement by a special word.
+                elif word != self.LINE_BREAK_WORD:
                     continue
 
                 if len(word_ids) == self.max_sentence_length:
@@ -194,8 +195,8 @@ class Dictionary(object):
 
     def transform_from_list(self, docs):
         """
-        :param docs: list of str
-        :return: np.ndarray of np.ndarray of int. word id's sequneces
+        :param docs: List of str
+        :return: np.ndarray of np.ndarray of int. Word id's sequences
         """
         if not self.is_tokenized:
             raise Exception("This dictionary instance has not tokenized yet.")
@@ -210,8 +211,8 @@ class Dictionary(object):
 
     def transform(self, docs):
         """
-        :param docs: list of str or str (file path and name)
-        :return: np.ndarray of np.ndarray of int. word id's sequneces
+        :param docs: List of str or str (file path and name)
+        :return: np.ndarray of np.ndarray of int. Word id's sequences
         """
         if not self.is_tokenized:
             raise Exception("This dictionary instance has not tokenized yet.")

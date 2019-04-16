@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Vocab(object):
-    def __init__(self, replace_lower_freq_word=False, replace_word='<unk>'):
+    def __init__(self, replace_lower_freq_word=False, replace_word="<UNK>"):
         """
         :param replace_lower_freq_word: boolean. Whether replace lower frequency and OOV word with `replace_word`.
         If False, these words removed from sequences.
@@ -18,7 +18,7 @@ class Vocab(object):
     def add_word(self, word: str):
         """
         Update word related class attributes.
-        :param word: str. added word.
+        :param word: str. Added word.
         :return: None
         """
         if word in self.word2id:
@@ -31,7 +31,7 @@ class Vocab(object):
     def remove_low_freq_words(self, min_count=5):
         """
         Sort and then remove lower frequency words (and replace them)
-        :param min_count: threshold of word frequency.
+        :param min_count: Threshold of word frequency.
         :return: None
         """
         self.id2word = sorted(self.word2freq, key=self.word2freq.get, reverse=True)
