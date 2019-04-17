@@ -28,7 +28,6 @@ class Dictionary(object):
         self.vocab = Vocab(replace_lower_freq_word, replace_word)
         self.num_words = 0
         self.num_vocab = 0
-        self.discard_table = None
         self.replace_lower_freq_word = replace_lower_freq_word
         self.min_count = max(min_count, 1)
         self.replace_word = replace_word
