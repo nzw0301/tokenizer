@@ -2,6 +2,7 @@ import numpy as np
 import logging
 
 from .vocab import Vocab
+from .discard_sampler import DiscardSampler
 
 
 class Dictionary(object):
@@ -12,7 +13,9 @@ class Dictionary(object):
         replace_lower_freq_word=False,
         min_count=5,
         replace_word="<UNK>",
-        max_sentence_length=1000
+        max_sentence_length=1000,
+        sample_t=0.,
+        rnd=np.random.RandomState(7)
     ):
         """
         :param replace_lower_freq_word: boolean. Whether replace lower frequency and OOV word with `replace_word`.
@@ -20,6 +23,7 @@ class Dictionary(object):
         :param min_count: Threshold of word frequency.
         :param replace_word: str. Replacing word for OOV word.
         :param max_sentence_length: Maximum word sequence length for generator version.
+        :param sample_t: Threshold of sub-sampling procedure. If this value is 0, do not sub-sampling.
         """
         self.vocab = Vocab(replace_lower_freq_word, replace_word)
         self.num_words = 0
@@ -30,6 +34,7 @@ class Dictionary(object):
         self.replace_word = replace_word
         self.is_tokenized = False
         self.max_sentence_length = int(max_sentence_length)
+        self.discard_sampler = DiscardSampler(sample_t=sample_t, rnd=rnd)
 
         # check arguments
         assert max_sentence_length > 0, "`max_sentence_length` must be positive."
@@ -97,6 +102,7 @@ class Dictionary(object):
         self.num_vocab = len(self.vocab)
         self.num_words = np.sum(self.vocab.id2freq)
         self.is_tokenized = True
+        self.discard_sampler.build_discard_table(self.vocab.id2freq)
 
     def fit_from_fname(self, fname: str, in_memory=False):
         """
@@ -176,7 +182,9 @@ class Dictionary(object):
 
                 elif word in self.vocab.word2id:
                     word_id = self.vocab.word2id[word]
-                    word_ids.append(word_id)
+                    # sub-sampling
+                    if not self.discard_sampler.discard(word_id):
+                        word_ids.append(word_id)
 
                 elif self.replace_lower_freq_word:
                     word_id = self.vocab.word2id[self.replace_word]
