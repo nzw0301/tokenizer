@@ -134,10 +134,10 @@ class Dictionary(object):
     def fit(self, docs, in_memory=False):
         """
         :param docs: List of str or str (file path and name)
-        :param in_memory: Boolean flag. If a file is large, you should pass `True`.
+        :param in_memory: Boolean flag. If a file is large, you should pass `False`.
             This argument is valid when type of `docs` is str.
-            True: Read each character like `word2vec.c`,
-            False: Fit a docs in-memory.
+            True: Fit a docs in-memory.
+            False: Read each character like `word2vec.c`,
         :return: None
         """
         if self.is_tokenized:
@@ -148,13 +148,13 @@ class Dictionary(object):
         elif isinstance(docs, str):
             self.fit_from_fname(fname=docs, in_memory=in_memory)
 
-    def fit_transform(self, docs):
+    def fit_transform(self, docs, in_memory=False):
         """
         In-memory `fit` and `transform`
         :param docs: List of str or str (file path and name).
         :return: List of list of int.
         """
-        self.fit(docs, in_memory=True)
+        self.fit(docs, in_memory=in_memory)
         return self.transform(docs)
 
     # in-memory version
