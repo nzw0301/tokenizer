@@ -202,9 +202,8 @@ class Dictionary(object):
         returned_docs = []
         for doc_id, doc in enumerate(docs):
             words = self._process_doc(doc)
-            if len(words) >= 1:
-                returned_docs.append(np.array(words))
-            else:
+            returned_docs.append(np.array(words))
+            if len(words) == 0:
                 logging.warning("Warning: {}th doc is empty".format(doc_id))
         return np.array(returned_docs)
 
