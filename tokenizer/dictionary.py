@@ -19,7 +19,7 @@ class Dictionary(object):
     ):
         """
         :param replace_lower_freq_word: boolean. Whether replace lower frequency and OOV word with `replace_word`.
-        If False, these words removed from sequences.
+            If False, these words removed from sequences.
         :param min_count: Threshold of word frequency.
         :param replace_word: str. Replacing word for OOV word.
         :param max_sentence_length: Maximum word sequence length for generator version.
@@ -141,7 +141,7 @@ class Dictionary(object):
         :param docs: List of str or str (file path and name)
         :param in_memory: Boolean flag. If a file is large, you should pass `False`.
             This argument is valid when type of `docs` is str.
-            True: Fit a docs in-memory.
+            True: Fit a docs by in-memory way.
             False: Read each character like `word2vec.c`,
         :return: None
         """
@@ -157,6 +157,10 @@ class Dictionary(object):
         """
         In-memory `fit` and `transform`
         :param docs: List of str or str (file path and name).
+        :param in_memory: Boolean flag. If a file is large, you should pass `False`.
+            This argument is valid when type of `docs` is str.
+            True: Fit a docs by in-memory way.
+            False: Read each character like `word2vec.c`,
         :return: List of list of int.
         """
         self.fit(docs, in_memory=in_memory)
