@@ -52,7 +52,7 @@ def tests():
         for in_memory in [False, True]:
             dictionary = Dictionary(min_count=5, replace_lower_freq_word=False, replace_word="")
             dictionary.fit_from_fname(fname, in_memory=in_memory)
-            assert len(dictionary.vocab) == 26-4
+            assert len(dictionary.vocab) == 26 - 4
             assert dictionary.vocab.id2word[0] == "z"
             assert dictionary.vocab.id2word[-1] == "e"
             assert dictionary.vocab.id2freq[0] == 26
@@ -61,7 +61,7 @@ def tests():
     def test_fit_from_docs(docs):
         dictionary = Dictionary(min_count=5, replace_lower_freq_word=False, replace_word="")
         dictionary.fit(docs)
-        assert len(dictionary.vocab) == 26-4
+        assert len(dictionary.vocab) == 26 - 4
         assert dictionary.vocab.id2word[0] == "z"
         assert dictionary.vocab.id2word[-1] == "e"
         assert dictionary.vocab.id2freq[0] == 26

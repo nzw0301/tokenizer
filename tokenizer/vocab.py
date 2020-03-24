@@ -53,6 +53,7 @@ class Vocab(object):
                 else:
                     for unknown_word in self.id2word[new_word_id:]:
                         del self.word2id[unknown_word]
+                        del self.word2freq[unknown_word]
                     self.id2word = self.id2word[:new_word_id]
 
                 break

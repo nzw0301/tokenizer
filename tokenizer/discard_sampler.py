@@ -3,11 +3,12 @@ import numpy as np
 
 class DiscardSampler(object):
     """
-    Sub-sampling tokens for a large corpus used in word2vec/fastText.
-    This method is proposed in Sec. 2.3 of Distributed Representations of Words and Phrases and their Compositionality
+    Sub-sampling tokens for a large corpus used in word2vec/fastText packages.
+    This method is proposed in Sec. 2.3 of "Distributed Representations of Words and Phrases and their Compositionality"
     by T. Mikolov et al.
-    Ref: https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality
+    Reference: https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality
     """
+
     def __init__(self, sample_t=0., rnd=np.random.RandomState(7)):
         """
         :param sample_t: sub-sampling parameter
