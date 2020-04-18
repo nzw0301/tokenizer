@@ -47,6 +47,7 @@ class Vocab(object):
                     for unknown_word in self.id2word[new_word_id:]:
                         sum_unk_freq += self.word2freq[unknown_word]
                         del self.word2id[unknown_word]
+                        del self.word2freq[unknown_word]
                     self.word2freq[self.replace_word] = sum_unk_freq
                     self.id2word = self.id2word[:new_word_id]
                     self.id2word.append(self.replace_word)
